@@ -20,7 +20,7 @@ namespace CQRS.Core.Domain
         {
             return _changes;
         }
-        public void MarkChangesAsCommited()
+        public void MarkChangesAsCommitted()
         {
             _changes.Clear();
         }
