@@ -1,9 +1,4 @@
 ﻿using CQRS.Core.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CQRS.Core.Domain
 {
@@ -27,8 +22,8 @@ namespace CQRS.Core.Domain
         private void ApplyChanges(BaseEvent @event, bool isNew)
         {
             var method = this.GetType().GetMethod("Apply", new Type[] { @event.GetType() });
-           
-            if(method == null)
+
+            if (method == null)
             {
                 throw new ArgumentNullException(nameof(method), $"The Apply method was not found in the aggregate for {@event.GetType().Name}!");
             };
@@ -42,11 +37,11 @@ namespace CQRS.Core.Domain
         }
         protected void RaiseEvent(BaseEvent @event)
         {
-            ApplyChanges( @event, true );
+            ApplyChanges(@event, true);
         }
         public void ReplayEvents(IEnumerable<BaseEvent> events)
         {
-            foreach(BaseEvent @event in events)
+            foreach (BaseEvent @event in events)
             {
                 ApplyChanges(@event, false);
             }

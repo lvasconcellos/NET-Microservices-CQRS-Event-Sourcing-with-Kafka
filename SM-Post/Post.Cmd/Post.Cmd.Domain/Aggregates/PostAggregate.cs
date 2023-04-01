@@ -1,13 +1,5 @@
 ﻿using CQRS.Core.Domain;
-using CQRS.Core.Messages;
 using Post.Cmd.Domain.Events;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Post.Cmd.Domain.Aggregates
 {
@@ -17,10 +9,10 @@ namespace Post.Cmd.Domain.Aggregates
         private string _author = default!;
         private readonly Dictionary<Guid, Tuple<string, string>> _comments = new();
 
-        public bool Active { get { return _active; } set {  _active = value; } }
+        public bool Active { get { return _active; } set { _active = value; } }
 
         public PostAggregate() { }
-        public PostAggregate(Guid id, string author, string message) 
+        public PostAggregate(Guid id, string author, string message)
         {
             RaiseEvent(new PostCreatedEvent
             {
@@ -72,7 +64,7 @@ namespace Post.Cmd.Domain.Aggregates
             _id = @event.Id;
 
         }
-        public void AddComment(string comment, string username) 
+        public void AddComment(string comment, string username)
         {
             CheckIfPostIsInactive(action: "add comment to");
 
@@ -93,7 +85,7 @@ namespace Post.Cmd.Domain.Aggregates
         public void Apply(CommentAddedEvent @event)
         {
             _id = @event.Id;
-            _comments.Add( @event.Id,new Tuple<string, string>(@event.Comment, @event.Username));
+            _comments.Add(@event.Id, new Tuple<string, string>(@event.Comment, @event.Username));
         }
         public void EditComment(Guid commentId, string comment, string username)
         {
@@ -111,7 +103,7 @@ namespace Post.Cmd.Domain.Aggregates
                 EditDate = DateTime.UtcNow
             });
         }
-        public void Apply(CommentUpdatedEvent @event) 
+        public void Apply(CommentUpdatedEvent @event)
         {
             _id = @event.Id;
             _comments[@event.CommentId] = new Tuple<string, string>(@event.Comment, @event.Username);

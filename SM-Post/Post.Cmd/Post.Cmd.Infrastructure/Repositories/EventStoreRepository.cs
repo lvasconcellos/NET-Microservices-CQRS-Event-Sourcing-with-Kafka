@@ -3,11 +3,6 @@ using CQRS.Core.Events;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Post.Cmd.Infrastructure.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Post.Cmd.Infrastructure.Repositories
 {
@@ -15,7 +10,7 @@ namespace Post.Cmd.Infrastructure.Repositories
     {
         private readonly IMongoCollection<EventModel> _eventStoreCollection;
 
-        public EventStoreRepository(IOptions<MongoDbOptions> mongoDbOptions)
+        public EventStoreRepository(IOptions<MongoDbOption> mongoDbOptions)
         {
             var mongoClient = new MongoClient(mongoDbOptions.Value.ConnectionString);
             var mongoDatabase = mongoClient.GetDatabase(mongoDbOptions.Value.Database);
@@ -32,7 +27,7 @@ namespace Post.Cmd.Infrastructure.Repositories
 
         public async Task SaveAsync(EventModel @event)
         {
-           await _eventStoreCollection.InsertOneAsync(@event).ConfigureAwait(false);
+            await _eventStoreCollection.InsertOneAsync(@event).ConfigureAwait(false);
         }
     }
 }

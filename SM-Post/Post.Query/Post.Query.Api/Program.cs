@@ -1,10 +1,21 @@
-using Post.Cmd.Infrastructure.Options;
+
+using Microsoft.EntityFrameworkCore;
+using Post.Query.Api;
+using Post.Query.Infrastructure.DataAcess;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.xxxxxxxx
+// Add services to the container.
+Action<DbContextOptionsBuilder> configureDbContext = o => o.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));
+builder.Services.AddDbContext<DatabaseContext>(configureDbContext);
+builder.Services.AddSingleton<DatabaseContextFactory>(new DatabaseContextFactory(configureDbContext));
+
+// Create database and tables from code
+var dataContext = builder.Services.BuildServiceProvider().GetRequiredService<DatabaseContext>();
+dataContext.Database.EnsureCreated();
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
