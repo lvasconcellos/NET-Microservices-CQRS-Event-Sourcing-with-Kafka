@@ -1,16 +1,16 @@
 ﻿using CQRS.Core.Events;
 
-namespace Post.Cmd.Domain.Events
+namespace Post.Common.Events
 {
-    public class CommentUpdatedEvent : BaseEvent
+    public class CommentAddedEvent : BaseEvent
     {
-        public CommentUpdatedEvent() : base(nameof(CommentUpdatedEvent))
+        public CommentAddedEvent() : base(nameof(CommentAddedEvent))
         {
         }
 
         public Guid CommentId { get; set; }
         public string Comment { get; set; } = default!;
         public string Username { get; set; } = default!;
-        public DateTime EditDate { get; set; }
+        public DateTime CommentDate { get; set; }
     }
 }

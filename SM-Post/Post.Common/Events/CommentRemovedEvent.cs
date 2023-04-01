@@ -1,6 +1,6 @@
 ﻿using CQRS.Core.Events;
 
-namespace Post.Cmd.Domain.Events
+namespace Post.Common.Events
 {
     public class CommentRemovedEvent : BaseEvent
     {
