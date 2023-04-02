@@ -1,9 +1,4 @@
-﻿using Post.Common.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Post.Common.Events;
 
 namespace Post.Query.Infrastructure.Handlers
 {

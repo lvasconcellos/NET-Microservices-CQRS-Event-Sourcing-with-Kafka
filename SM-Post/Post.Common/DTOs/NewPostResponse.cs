@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CQRS.Core.Consumer
+namespace Post.Common.DTOs
 {
-    public interface IEventConsumer
+    public class NewPostResponse: BaseResponse
     {
-        void Consume(string topic);
+        public Guid Id { get; set; }
     }
 }

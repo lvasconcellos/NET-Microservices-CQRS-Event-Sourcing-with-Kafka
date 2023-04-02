@@ -1,17 +1,6 @@
 {
   "profiles": {
-    "http": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "KAFKA_TOPIC": "SocialMediaPostEvents",
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5074"
-    },
-    "https": {
+    "Post.Query.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -36,8 +25,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:12978",
-      "sslPort": 44303
+      "applicationUrl": "http://localhost:14238",
+      "sslPort": 44372
     }
   }
 }

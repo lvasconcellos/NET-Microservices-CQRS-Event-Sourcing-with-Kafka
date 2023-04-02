@@ -1,11 +1,6 @@
-﻿using Post.Common.Events;
+using Post.Common.Events;
 using Post.Query.Domain.Entities;
 using Post.Query.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Post.Query.Infrastructure.Handlers
 {
@@ -27,7 +22,7 @@ namespace Post.Query.Infrastructure.Handlers
                 PostId = @event.Id,
                 Author = @event.Author,
                 DatePosted = @event.DatePosted,
-                Message = @event.Message,
+                Message = @event.Message
             };
 
             await _postRepository.CreateAsync(post);
@@ -70,7 +65,8 @@ namespace Post.Query.Infrastructure.Handlers
 
         public async Task On(CommentUpdatedEvent @event)
         {
-            var comment = await _commentRepository.GetByIdAsync(@event.Id);
+            var comment = await _commentRepository.GetByIdAsync(@event.CommentId);
+
             if (comment == null) return;
 
             comment.Comment = @event.Comment;
@@ -78,7 +74,6 @@ namespace Post.Query.Infrastructure.Handlers
             comment.CommentDate = @event.EditDate;
 
             await _commentRepository.UpdateAsync(comment);
-
         }
 
         public async Task On(CommentRemovedEvent @event)
