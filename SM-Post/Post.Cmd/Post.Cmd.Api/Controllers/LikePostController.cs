@@ -10,29 +10,27 @@ namespace Post.Cmd.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class EditMessageController : ControllerBase
+    public class LikePostController : ControllerBase
     {
-        private readonly ILogger<EditMessageController> _logger;
+        private readonly ILogger<LikePostController> _logger;
         private readonly ICommandDispatcher _commandDispatcher;
 
-        public EditMessageController(ILogger<EditMessageController> logger, ICommandDispatcher commandDispatcher)
+        public LikePostController(ILogger<LikePostController> logger, ICommandDispatcher commandDispatcher)
         {
             _logger = logger;
             _commandDispatcher = commandDispatcher;
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> EditMessageAsync(Guid id, EditMessageCommand editMessageCommand)
+        public async Task<ActionResult> LikePostAsync(Guid id)
         {
             try
             {
-                editMessageCommand.Id = id;
-
-                await _commandDispatcher.SendAsync(editMessageCommand);
+                await _commandDispatcher.SendAsync(new LikePostCommand { Id = id });
 
                 return Ok(new BaseResponse
                 {
-                    Message = "Edit message request completed successufully!"
+                    Message = "Like post request completed successufully!"
                 });
             }
             catch (InvalidOperationException exception)
@@ -53,7 +51,7 @@ namespace Post.Cmd.Api.Controllers
             }
             catch (Exception exception)
             {
-                const string SAFE_ERROR_MESSAGE = "Error while processing request to edit message!";
+                const string SAFE_ERROR_MESSAGE = "Error while processing request to like post!";
                 _logger.Log(LogLevel.Error, exception, SAFE_ERROR_MESSAGE);
 
                 return StatusCode(StatusCodes.Status500InternalServerError, new BaseResponse
