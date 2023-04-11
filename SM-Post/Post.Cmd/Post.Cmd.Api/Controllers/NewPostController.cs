@@ -1,6 +1,4 @@
 ﻿using CQRS.Core.Infrastructure;
-using CQRS.Core.Messages;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Post.Cmd.Api.Commands;
 using Post.Common.DTOs;
@@ -33,6 +31,7 @@ namespace Post.Cmd.Api.Controllers
 
                 return StatusCode(StatusCodes.Status201Created, new NewPostResponse
                 {
+                    Id = id,
                     Message = "New post creation request completed successufully!"
                 });
             }
