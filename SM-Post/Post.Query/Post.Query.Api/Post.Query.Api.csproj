@@ -20,8 +20,4 @@
     <ProjectReference Include="..\..\Post.Common\Post.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>
