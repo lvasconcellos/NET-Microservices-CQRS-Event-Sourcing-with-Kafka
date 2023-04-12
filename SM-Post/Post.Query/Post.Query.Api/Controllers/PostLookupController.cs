@@ -32,8 +32,8 @@ namespace Post.Query.Api.Controllers
             {
                 const string SAFE_ERROR_MESSAGE = "Error while processing request to retrieve all posts!";
                 return ErrorResponse(exception, SAFE_ERROR_MESSAGE);
-            }     
-           
+            }
+
         }
 
         [HttpGet("byId/{postId}")]

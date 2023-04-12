@@ -3,7 +3,6 @@ using Confluent.Kafka;
 using CQRS.Core.Consumers;
 using CQRS.Core.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Post.Query.Api;
 using Post.Query.Api.Queries;
 using Post.Query.Domain.Entities;
 using Post.Query.Domain.Repositories;
