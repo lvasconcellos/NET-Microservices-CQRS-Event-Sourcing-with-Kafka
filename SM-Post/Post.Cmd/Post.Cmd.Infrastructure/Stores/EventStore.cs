@@ -30,7 +30,7 @@ namespace Post.Cmd.Infrastructure.Stores
         {
             var eventStream = await _eventStoreRepository.FindByAggregateId(aggregateId);
             if (expectedVersion != -1 && eventStream[^1].Version != expectedVersion)
-                throw new ConcurrentException("Incorrect post ID provided!");
+                throw new ConcurrencyException("Incorrect post ID provided!");
 
             var version = expectedVersion;
             foreach (var @event in events)

@@ -1,15 +1,13 @@
 ﻿using CQRS.Core.Exceptions;
 using CQRS.Core.Infrastructure;
-using CQRS.Core.Messages;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Post.Cmd.Api.Commands;
 using Post.Common.DTOs;
 
 namespace Post.Cmd.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
     [ApiController]
+    [Route("api/v1/[controller]")]
     public class DeletePostController : ControllerBase
     {
         private readonly ILogger<DeletePostController> _logger;
@@ -21,38 +19,39 @@ namespace Post.Cmd.Api.Controllers
             _commandDispatcher = commandDispatcher;
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> DeletePostAsync(Guid id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePostAsync(Guid id, DeletePostCommand command)
         {
             try
             {
-                await _commandDispatcher.SendAsync(new DeletePostCommand { Id = id });
+                command.Id = id;
+                await _commandDispatcher.SendAsync(command);
 
                 return Ok(new BaseResponse
                 {
-                    Message = "Delete post request completed successufully!"
+                    Message = "Delete post request completed successfully!"
                 });
             }
-            catch (InvalidOperationException exception)
+            catch (InvalidOperationException ex)
             {
-                _logger.Log(LogLevel.Warning, exception, "Client made a bad request");
+                _logger.Log(LogLevel.Warning, ex, "Client made a bad request!");
                 return BadRequest(new BaseResponse
                 {
-                    Message = exception.Message,
+                    Message = ex.Message
                 });
             }
-            catch (AggregateNotFoundException exception)
+            catch (AggregateNotFoundException ex)
             {
-                _logger.Log(LogLevel.Warning, exception, "Could not retrive aggregate, client passed an incorrect post ID targetting the aggregate!");
+                _logger.Log(LogLevel.Warning, ex, "Could not retrieve aggregate, client passed an incorrect post ID targetting the aggregate!");
                 return BadRequest(new BaseResponse
                 {
-                    Message = exception.Message,
+                    Message = ex.Message
                 });
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                const string SAFE_ERROR_MESSAGE = "Error while processing request to delete post!";
-                _logger.Log(LogLevel.Error, exception, SAFE_ERROR_MESSAGE);
+                const string SAFE_ERROR_MESSAGE = "Error while processing request to delete a post!";
+                _logger.Log(LogLevel.Error, ex, SAFE_ERROR_MESSAGE);
 
                 return StatusCode(StatusCodes.Status500InternalServerError, new BaseResponse
                 {
