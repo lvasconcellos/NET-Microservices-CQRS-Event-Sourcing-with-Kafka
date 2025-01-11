@@ -364,5 +364,4 @@ FodyWeavers.xsd
 /docker-compose.yml
 
 # App settings files
-appsettings.json
 appsettings.*.json
